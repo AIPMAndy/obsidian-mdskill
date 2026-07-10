@@ -1,0 +1,10 @@
+{
+  "id": "wechat-publisher",
+  "name": "WeChat Publisher",
+  "version": "1.0.0",
+  "minAppVersion": "0.15.0",
+  "description": "Convert Markdown to WeChat Official Account ready HTML with 15 beautiful styles. One-click copy to WeChat editor.",
+  "author": "Andy",
+  "authorUrl": "https://github.com/yourusername",
+  "isDesktopOnly": false
+}
