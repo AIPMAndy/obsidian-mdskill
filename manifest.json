@@ -1,7 +1,7 @@
 {
   "id": "obsidian-mdskill",
   "name": "Obsidian-MDskill",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "minAppVersion": "0.15.0",
   "description": "Convert Markdown to WeChat Official Account ready HTML with 15 beautiful styles. One-click copy to WeChat editor.",
   "author": "Andy",
