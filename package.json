@@ -1,7 +1,7 @@
 {
-  "name": "obsidian-wechat-publisher",
+  "name": "obsidian-mdskill",
   "version": "1.1.0",
-  "description": "Obsidian plugin to convert Markdown to WeChat Official Account HTML",
+  "description": "Obsidian plugin to convert Markdown to WeChat Official Account HTML with multiple styles",
   "main": "main.js",
   "scripts": {
     "dev": "node esbuild.config.mjs",
@@ -10,10 +10,9 @@
   },
   "keywords": [
     "obsidian",
-    "obsidian-plugin",
+    "plugin",
     "wechat",
-    "markdown",
-    "publisher"
+    "markdown"
   ],
   "author": "Andy",
   "license": "MIT",
