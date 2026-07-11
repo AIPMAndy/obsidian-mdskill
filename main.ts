@@ -54,23 +54,7 @@ const STYLES = {
 	github: {
 		name: 'GitHub README',
 		description: '安装说明、工具介绍、技术文档',
-		css: `body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif;font-size:16px;line-height:1.76;color:#24292f;max-width:760px;margin:0 auto;padding:24px 22px;background:#fff;}h1{font-size:26px;line-height:1.28;font-weight:750;text-align:left;margin:36px 0 22px;color:#24292f;padding-bottom:10px;border-bottom:1px solid #d0d7de;}h2{font-size:20px;line-height:1.45;font-weight:700;margin:38px 0 14px;color:#24292f;padding-bottom:8px;border-bottom:1px solid #d8dee4;}h3{font-size:17px;line-height:1.5;font-weight:700;margin:28px 0 10px;color:#24292f;}p{margin:11px 0;line-height:1.76;}blockquote{margin:18px 0;padding:8px 16px;border-left:4px solid #d0d7de;color:#57606a;background:#fff;font-style:normal;}ul{margin:12px 0;padding-left:24px;}li{margin:6px 0;line-height:1.76;}strong{font-weight:750;color:#24292f;}code{font-family:"SFMono-Regular",Consolas,"Liberation Mono",Menlo,monospace;background:#f6f8fa;color:#24292f;padding:2px 6px;border-radius:4px;font-size:14px;}pre{background:#f6f8fa;color:#24292f;padding:14px 16px;overflow:auto;font-size:14px;line-height:.addOptions({
-						minimal: '极简黑白',
-						medium: 'Medium Essay',
-						wired: 'WIRED Feature',
-						verge: 'The Verge Briefing',
-						stripe: 'Stripe Docs',
-						apple: 'Apple Newsroom',
-						ft: 'FT Analysis',
-						linear: 'Linear Changelog',
-						github: 'GitHub README',
-						notion: 'Notion Memo',
-						magazine: 'Magazine Feature',
-						editorial: 'Editorial Column',
-						newspaper: 'Newspaper Report',
-						course: '课程讲义',
-						event: '活动公告'
-					});}`
+		css: `body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif;font-size:16px;line-height:1.76;color:#24292f;max-width:760px;margin:0 auto;padding:24px 22px;background:#fff;}h1{font-size:26px;line-height:1.28;font-weight:750;text-align:left;margin:36px 0 22px;color:#24292f;padding-bottom:10px;border-bottom:1px solid #d0d7de;}h2{font-size:20px;line-height:1.45;font-weight:700;margin:38px 0 14px;color:#24292f;padding-bottom:8px;border-bottom:1px solid #d8dee4;}h3{font-size:17px;line-height:1.5;font-weight:700;margin:28px 0 10px;color:#24292f;}p{margin:11px 0;line-height:1.76;}blockquote{margin:18px 0;padding:8px 16px;border-left:4px solid #d0d7de;color:#57606a;background:#fff;font-style:normal;}ul{margin:12px 0;padding-left:24px;}li{margin:6px 0;line-height:1.76;}strong{font-weight:750;color:#24292f;}code{font-family:"SFMono-Regular",Consolas,"Liberation Mono",Menlo,monospace;background:#f6f8fa;color:#24292f;padding:2px 6px;border-radius:4px;font-size:14px;}pre{background:#f6f8fa;color:#24292f;padding:14px 16px;overflow:auto;font-size:14px;line-height:1.6;}pre code{background:none;padding:0;}hr{border:none;border-top:1px solid #d0d7de;margin:28px 0;}`
 	},
 	notion: {
 		name: 'Notion Memo',
@@ -102,7 +86,7 @@ const STYLES = {
 		description: '活动通知、招募、发布公告、转化文',
 		css: `body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif;font-size:16px;line-height:1.78;color:#2c2424;max-width:740px;margin:0 auto;padding:22px;background:#fff;}h1{font-size:24px;line-height:1.35;font-weight:900;text-align:center;margin:34px 0 20px;color:#8f1f1d;padding:18px 12px;border:2px solid #8f1f1d;background:#fffafa;}h2{font-size:19px;line-height:1.45;font-weight:850;margin:40px 0 14px;color:#8f1f1d;padding:0 0 10px;border-bottom:2px solid #8f1f1d;}h3{font-size:17px;line-height:1.5;font-weight:800;margin:30px 0 10px;color:#4a2a2a;}p{margin:12px 0;line-height:1.78;}blockquote{margin:18px 0;padding:14px 16px;background:#8f1f1d;color:#fff;border-left:0;font-style:normal;}ul{margin:12px 0;padding-left:20px;}li{margin:7px 0;line-height:1.78;}strong{font-weight:900;color:#8f1f1d;}code{font-family:"SFMono-Regular",Consolas,"Liberation Mono",Menlo,monospace;background:#fff0f0;color:#8f1f1d;padding:2px 6px;border-radius:3px;font-size:14px;}pre{background:#fff0f0;color:#8f1f1d;padding:14px 16px;overflow:auto;font-size:14px;line-height:1.6;}pre code{background:none;padding:0;}hr{border:none;height:2px;background:#8f1f1d;margin:30px 0;}`
 	}
-};;
+};
 
 const VIEW_TYPE_WECHAT_PREVIEW = 'wechat-preview';
 
@@ -281,13 +265,17 @@ class WeChatPreviewView extends ItemView {
 	}
 
 	processInline(text: string): string {
+		// First escape HTML to prevent XSS
+		text = this.escapeHTML(text);
+
+		// Then apply markdown formatting
 		// Bold
 		text = text.replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>');
 
 		// Inline code
 		text = text.replace(/`(.+?)`/g, '<code>$1</code>');
 
-		return this.escapeHTML(text);
+		return text;
 	}
 
 	escapeHTML(text: string): string {
