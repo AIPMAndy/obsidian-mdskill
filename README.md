@@ -1,75 +1,103 @@
-# WeChat Publisher for Obsidian
+# Obsidian-MDskill
 
-Convert your Obsidian Markdown notes to beautiful WeChat Official Account ready HTML with one click.
+将 Obsidian 中的 Markdown 文档一键转换为微信公众号格式，提供 15 种精美样式。
 
-## Features
+## ✨ 功能特性
 
-- **15 Built-in Styles** (MVP: 3 core styles included)
-  - Minimal (极简黑白) - Clean and professional
-  - Medium Essay - Long-form articles
-  - Stripe Docs - Documentation style
+- 🎨 **15 种精美样式** - 覆盖科技、财经、内容、教育等多个场景
+- 📱 **一键复制** - 直接复制到微信公众号后台，样式完美保留
+- 👀 **实时预览** - 编辑时即时查看最终效果
+- 💾 **导出 HTML** - 保存为独立 HTML 文件
+- ⚙️ **灵活配置** - 可设置默认样式和自动更新
 
-- **Live Preview** - See your formatted article in real-time
-- **One-Click Copy** - Copy HTML directly to WeChat editor
-- **Export HTML** - Save formatted HTML files locally
-- **Auto-Update** - Preview updates as you type
+## 📦 安装
 
-## Usage
+### 方式一：手动安装（推荐）
+1. 下载最新 [Release](https://github.com/AIPMAndy/obsidian-mdskill/releases)
+2. 解压到 `.obsidian/plugins/obsidian-mdskill/` 目录
+3. 在 Obsidian 设置中启用插件
 
-### Open Preview Panel
+### 方式二：社区插件（即将上线）
+在 Obsidian 社区插件市场搜索 "Obsidian-MDskill"
 
-1. Click the smartphone icon in the left ribbon, or
-2. Use command palette: "打开公众号预览"
+## 🚀 快速开始
 
-### Copy to WeChat
+1. 打开 Markdown 文件
+2. 点击右侧 📱 图标
+3. 选择样式并预览
+4. 点击"复制到公众号"
+5. 粘贴到微信公众号编辑器
 
-1. Write your article in Markdown
-2. Select your preferred style from the dropdown
-3. Click "复制到公众号" button
-4. Paste into WeChat Official Account editor (Cmd/Ctrl + V)
+详细使用说明见 [USER_GUIDE.md](USER_GUIDE.md)
 
-### Export HTML
+## 🎨 样式预览
 
-1. Select your preferred style
-2. Click "导出HTML" button
-3. HTML file will be saved to your downloads folder
+### 经典媒体风格
+- **极简黑白** - 默认款、方法论、诊断报告
+- **Medium Essay** - 长文观点、个人文章
+- **WIRED Feature** - 科技、AI、前沿趋势
+- **The Verge Briefing** - 热点解读、资讯评论
+- **Apple Newsroom** - 正式公告、产品介绍
+- **FT Analysis** - 财经、商业分析、市场判断
 
-## Keyboard Shortcuts
+### 科技产品风格
+- **Stripe Docs** - 工具说明、教程、产品文档
+- **Linear Changelog** - 版本更新、功能更新
+- **GitHub README** - 安装说明、技术文档
+- **Notion Memo** - 学习笔记、项目复盘
 
-You can assign custom keyboard shortcuts in Obsidian settings:
-- Open preview panel
-- Copy to WeChat
+### 内容出版风格
+- **Magazine Feature** - 人物稿、品牌故事
+- **Editorial Column** - 创作者手记、观点随笔
+- **Newspaper Report** - 调查稿、严肃分析
 
-## Settings
+### 中文公众号风格
+- **课程讲义** - 教程、学习笔记
+- **活动公告** - 招募、转化文
 
-- **Default Style**: Choose which style to use by default
-- **Auto Update**: Toggle automatic preview updates while typing
+## 📝 支持的 Markdown 语法
 
-## Supported Markdown
+✅ **当前支持**
+- H1/H2/H3 标题
+- 粗体文本
+- 行内代码
+- 无序列表
+- 引用块
+- 分隔线
 
-- Headings (H1-H3)
-- Paragraphs
-- Bold text (`**bold**`)
-- Inline code (`` `code` ``)
-- Lists (unordered)
-- Blockquotes
-- Horizontal rules
-- Code blocks
+⏳ **计划支持**（v1.2）
+- 表格
+- 图片
+- 链接
+- 有序列表
+- 多行代码块
 
-## Roadmap
+## 🛠️ 开发
 
-- [ ] Add all 15 styles from dbs-wechat-html
-- [ ] Custom style editor
-- [ ] Batch export multiple styles
-- [ ] Style comparison view
-- [ ] Front Matter integration
-- [ ] Image handling
-- [ ] Table support
+```bash
+# 克隆项目
+git clone https://github.com/AIPMAndy/obsidian-mdskill.git
+cd obsidian-mdskill
 
-## Credits
+# 安装依赖
+npm install
 
-Built by Andy. Inspired by [dbs-wechat-html](https://github.com/dontbesilent/dbs-wechat-html).
+# 开发模式
+npm run dev
 
-## License
+# 构建
+npm run build
+```
 
-MIT
+## 📄 许可
+
+MIT License
+
+## 🙏 致谢
+
+样式来源于 [dbs-wechat-html](https://github.com/yourusername/dbs-wechat-html) 项目
+
+## 📮 反馈
+
+- 🐛 Bug 报告：[GitHub Issues](https://github.com/AIPMAndy/obsidian-mdskill/issues)
+- 💡 功能建议：[GitHub Discussions](https://github.com/AIPMAndy/obsidian-mdskill/discussions)
