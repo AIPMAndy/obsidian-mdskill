@@ -1,0 +1,117 @@
+{
+  "playful": {
+    "id": "playful",
+    "name": "多彩活力",
+    "description": "高级多彩设计感，融合当代审美"
+  },
+  "default": {
+    "id": "default",
+    "name": "GitHub Dark",
+    "description": "经典 GitHub 暗色主题，适合代码文档"
+  },
+  "githubLight": {
+    "id": "github-light",
+    "name": "GitHub Light",
+    "description": "清爽的亮色主题，护眼舒适"
+  },
+  "minimal": {
+    "id": "minimal",
+    "name": "极简现代",
+    "description": "极简设计，专注内容"
+  },
+  "magazine": {
+    "id": "magazine",
+    "name": "杂志布局",
+    "description": "杂志风格布局，适合深度报道"
+  },
+  "artistic": {
+    "id": "artistic",
+    "name": "艺术创意",
+    "description": "装饰性创意元素，适合设计展示"
+  },
+  "wechatElegant": {
+    "id": "wechat-elegant",
+    "name": "公众号·优雅",
+    "description": "经典公众号风格，优雅灵动"
+  },
+  "nytimes": {
+    "id": "nytimes",
+    "name": "纽约时报",
+    "description": "经典报业风格，严谨优雅"
+  },
+  "wired": {
+    "id": "wired",
+    "name": "Wired 连线",
+    "description": "科技媒体风格，色彩鲜明"
+  },
+  "medium": {
+    "id": "medium",
+    "name": "Medium 长文",
+    "description": "内容平台风格，专注阅读"
+  },
+  "anthropic": {
+    "id": "anthropic",
+    "name": "Anthropic Claude",
+    "description": "AI 时代风格，简洁现代"
+  },
+  "code": {
+    "id": "code",
+    "name": "开发者",
+    "description": "开发者等宽字体，适合技术文档"
+  },
+  "terminal": {
+    "id": "terminal",
+    "name": "终端控制台",
+    "description": "终端控制台美学，适合命令行文档"
+  },
+  "cyberpunk": {
+    "id": "cyberpunk",
+    "name": "赛博朋克",
+    "description": "未来霓虹风格，适合科技前沿内容"
+  },
+  "zen": {
+    "id": "zen",
+    "name": "禅意留白",
+    "description": "超极简留白设计，适合深度思考"
+  },
+  "appleLight": {
+    "id": "apple-light",
+    "name": "Apple Light",
+    "description": "纯净亮色，极简无衬线，高级感"
+  },
+  "appleDark": {
+    "id": "apple-dark",
+    "name": "Apple Dark",
+    "description": "深灰暗色，优雅极简，适合夜间阅读"
+  },
+  "appleGray": {
+    "id": "apple-gray",
+    "name": "Apple Gray",
+    "description": "中性灰系，SF Pro 风格，专业严谨"
+  },
+  "silicon": {
+    "id": "silicon",
+    "name": "Silicon Valley",
+    "description": "科技感高级风格，适合技术内容"
+  },
+  "minimalPro": {
+    "id": "minimal-pro",
+    "name": "Minimal Pro",
+    "description": "极简升级版，严谨排版，高级感"
+  },
+  "paper": {
+    "id": "paper",
+    "name": "纸质纹理",
+    "description": "纸质纹理效果，适合传统阅读"
+  },
+  "novel": {
+    "id": "novel",
+    "name": "小说阅读",
+    "description": "书籍阅读体验，适合长篇故事"
+  },
+  "journal": {
+    "id": "journal",
+    "name": "个人日记",
+    "description": "个人日记风格，适合随笔记录"
+  }
+}
