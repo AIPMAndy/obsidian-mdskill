@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>最终验证 - 精确模拟 Obsidian</title>
+<style>
+/* 模拟 Obsidian 非常强的全局样式 */
+body, div, h1, h2, h3, p { 
+  all: initial;
+  display: block;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto !important;
+  color: #dcddde !important;
+  background: #2f3136 !important;
+  font-size: 14px !important;
+  line-height: 1.5 !important;
+  margin: 0 !important;
+  padding: 0 !important;
+}
+.mdskill-preview * {
+  font-family: monospace !important;
+  color: #999 !important;
+}
+</style>
+</head>
+<body style="padding: 20px !important;">
+
+<h1 style="font-size: 20px !important; margin-bottom: 20px !important;">最终验证测试</h1>
+
+<div style="display: flex; gap: 20px;">
+  <div style="width: 300px; padding: 10px; background: #202225 !important;">
+    <select id="theme" style="width: 100%; padding: 8px; margin-bottom: 10px;">
+      <option value="githubLight">GitHub Light</option>
+      <option value="minimal">极简现代</option>
+      <option value="magazine">杂志布局</option>
+    </select>
+    <button id="switch" style="width: 100%; padding: 10px; cursor: pointer;">切换主题</button>
+    
+    <div style="margin-top: 20px; padding: 10px; background: #000; color: #0f0; font-family: monospace !important; font-size: 11px !important; max-height: 400px; overflow-y: auto;" id="log"></div>
+  </div>
+  
+  <div style="flex: 1; padding: 20px; background: #36393f !important; border: 2px solid #000;">
+    <div id="preview"></div>
+  </div>
+</div>
+
+<script>
+// 从编译后的实际代码提取的主题（第 14-180 行）
+const STYLES = {
+  githubLight: {
+    name: "GitHub Light",
+    css: `body{font-family:"Noto Sans SC", -apple-system, sans-serif;font-size:16px;line-height:1.8;color:#333333;}h2{font-family:"Noto Sans SC", -apple-system, sans-serif;font-size:24px;font-weight:600;color:#1a1a1a;margin:36px 0 16px;border-bottom:2px solid #e2e8f0;padding-bottom:8px;}p{margin:8px 0;line-height:1.8;color:#333333;}`
+  },
+  minimal: {
+    name: "极简现代",  
+    css: `body{font-family:"Noto Sans SC", -apple-system, sans-serif;font-size:16px;line-height:1.9;color:#374151;}h2{font-family:"Noto Sans SC", -apple-system, sans-serif;font-size:22px;font-weight:600;color:#111827;margin:36px 0 16px;}p{margin:8px 0;line-height:1.9;color:#374151;}`
+  },
+  magazine: {
+    name: "杂志布局",
+    css: `body{font-family:"Georgia", serif;font-size:17px;line-height:1.9;color:#333333;}h2{font-family:"Merriweather", Georgia, serif;font-size:26px;font-weight:700;color:#2c2c2c;margin:44px 0 16px;border-bottom:2px solid #1a1a1a;padding-bottom:8px;}p{margin:20px 0;line-height:1.9;color:#333333;}`
+  }
+};
+
+let themeStyleEl = null;
+const logEl = document.getElementById('log');
+const previewEl = document.getElementById('preview');
+
+function log(msg, color = '#0f0') {
+  logEl.innerHTML += `<div style="color: ${color};">${new Date().toLocaleTimeString()} ${msg}</div>`;
+  logEl.scrollTop = logEl.scrollHeight;
+}
+
+function updatePreview(themeName) {
+  log('━━━━━━━━━━━━━━━━━━━━━━━━━━━', '#fff');
+  log(`开始切换: ${themeName}`, '#ff0');
+  
+  const style = STYLES[themeName];
+  if (!style) {
+    log(`❌ 未找到主题`, '#f00');
+    return;
+  }
+  
+  // 第 299-304 行：移除旧样式，创建新样式
+  if (themeStyleEl) {
+    themeStyleEl.remove();
+    log('✓ 移除旧 style 标签');
+  }
+  
+  themeStyleEl = document.createElement("style");
+  themeStyleEl.id = "mdskill-theme-style";
+  document.head.appendChild(themeStyleEl);
+  log('✓ 创建新 style 并添加到 head');
+  
+  // 第 305 行：作用域化
+  let scopedCSS = style.css
+    .replace(/body\s*\{/g, ".mdskill-preview {")
+    .replace(/\}h2\s*\{/g, "}.mdskill-preview h2 {")
+    .replace(/\}p\s*\{/g, "}.mdskill-preview p {");
+  
+  log(`✓ 作用域化完成，匹配了 ${(scopedCSS.match(/\.mdskill-preview/g) || []).length} 个选择器`);
+  
+  // 第 306 行：添加 !important
+  const beforeImportant = scopedCSS.length;
+  scopedCSS = scopedCSS.replace(/(color|font-size|font-family|line-height|border-bottom|background|padding|margin|font-weight):\s*([^;]+);/g, "$1:$2 !important;");
+  log(`✓ 添加 !important，CSS 从 ${beforeImportant} 增加到 ${scopedCSS.length} 字符`);
+  
+  // 第 307-308 行：设置 textContent
+  themeStyleEl.textContent = scopedCSS;
+  log(`✓ 已将 ${scopedCSS.length} 字符的 CSS 写入 style.textContent`);
+  
+  // 第 309-312 行：更新内容
+  previewEl.innerHTML = '';
+  const contentDiv = document.createElement('div');
+  contentDiv.className = 'mdskill-preview';
+  contentDiv.innerHTML = `
+    <h2>这是二级标题</h2>
+    <p>这是段落文本。如果你能看到颜色、字体、大小的明显变化，说明主题切换成功。</p>
+    <p>当前主题: ${style.name}</p>
+  `;
+  previewEl.appendChild(contentDiv);
+  log('✓ 内容已更新');
+  
+  // 验证实际应用的样式
+  setTimeout(() => {
+    const h2 = contentDiv.querySelector('h2');
+    const p = contentDiv.querySelector('p');
+    if (h2 && p) {
+      const h2Style = window.getComputedStyle(h2);
+      const pStyle = window.getComputedStyle(p);
+      
+      log('━━━ 实际渲染样式 ━━━', '#0ff');
+      log(`H2 color: ${h2Style.color}`, h2Style.color);
+      log(`H2 font-size: ${h2Style.fontSize}`);
+      log(`H2 font-family: ${h2Style.fontFamily.substring(0, 40)}...`);
+      log(`H2 border-bottom: ${h2Style.borderBottom}`);
+      log(`P color: ${pStyle.color}`, pStyle.color);
+      log(`P font-size: ${pStyle.fontSize}`);
+      log(`P line-height: ${pStyle.lineHeight}`);
+      
+      // 检查是否被覆盖
+      const isWorking = h2Style.fontSize !== '14px' && pStyle.color !== 'rgb(153, 153, 153)';
+      if (isWorking) {
+        log('✅ 主题样式已生效！', '#0f0');
+      } else {
+        log('❌ 样式被全局样式覆盖', '#f00');
+      }
+    }
+  }, 100);
+}
+
+document.getElementById('switch').addEventListener('click', () => {
+  updatePreview(document.getElementById('theme').value);
+});
+
+log('初始化完成', '#0ff');
+log('说明: 页面有超强 !important 全局样式');
+log('如果切换主题后右侧颜色/字体/大小改变 = 代码正确');
+log('如果切换主题后右侧没变化 = 代码有问题', '#f00');
+updatePreview('githubLight');
+</script>
+
+</body>
+</html>

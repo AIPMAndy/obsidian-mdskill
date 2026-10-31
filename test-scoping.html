@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>CSS Scoping Test</title>
+<style>
+/* 模拟 Obsidian 的全局样式 */
+body { background: #1e1e1e; color: #ccc; }
+h1, h2, h3 { color: #999; }
+p { color: #888; line-height: 1.5; }
+</style>
+</head>
+<body>
+
+<h1>测试：CSS 作用域是否生效</h1>
+
+<div class="test-container" style="border: 1px solid #555; padding: 20px; margin: 20px;">
+  <h2>场景 1: 直接样式（应该被覆盖）</h2>
+  <div id="test1">
+    <div class="mdskill-preview">
+      <h2>这是标题</h2>
+      <p>这是段落文本</p>
+    </div>
+  </div>
+</div>
+
+<div class="test-container" style="border: 1px solid #555; padding: 20px; margin: 20px;">
+  <h2>场景 2: 动态插入 style 标签</h2>
+  <div id="test2">
+    <div class="mdskill-preview">
+      <h2>这是标题</h2>
+      <p>这是段落文本</p>
+    </div>
+  </div>
+</div>
+
+<div class="test-container" style="border: 1px solid #555; padding: 20px; margin: 20px;">
+  <h2>场景 3: style 作为第一个子元素</h2>
+  <div id="test3"></div>
+</div>
+
+<script>
+// 模拟主题 CSS
+const themeCSS = `body{font-family:"Noto Sans SC", -apple-system, sans-serif;font-size:16px;line-height:1.8;color:#333333;max-width:900px;margin:0 auto;padding:40px;background:#ffffff;}h1{font-family:"Noto Sans SC", -apple-system, sans-serif;font-size:32px;font-weight:700;color:#1a1a1a;margin:0 0 24px;}h2{font-family:"Noto Sans SC", -apple-system, sans-serif;font-size:24px;font-weight:600;color:#1a1a1a;margin:36px 0 16px;border-bottom:2px solid #e2e8f0;padding-bottom:8px;}h3{font-size:20px;font-weight:600;color:#333333;margin:30px 0 12px;}p{margin:8px 0;line-height:1.8;}`;
+
+// 作用域化 CSS
+const scopedCSS = themeCSS
+  .replace(/body\s*\{/g, '.mdskill-preview {')
+  .replace(/\bh1\s*\{/g, '.mdskill-preview h1 {')
+  .replace(/\bh2\s*\{/g, '.mdskill-preview h2 {')
+  .replace(/\bh3\s*\{/g, '.mdskill-preview h3 {')
+  .replace(/\bp\s*\{/g, '.mdskill-preview p {');
+
+console.log('=== Scoped CSS ===');
+console.log(scopedCSS);
+
+// 场景 1: 在 head 中添加 style
+const style1 = document.createElement('style');
+style1.textContent = scopedCSS;
+document.head.appendChild(style1);
+console.log('✅ 场景 1: 已在 head 中添加 style');
+
+// 场景 2: 在容器内添加 style（模拟当前实现）
+const container2 = document.getElementById('test2');
+const style2 = document.createElement('style');
+style2.textContent = scopedCSS;
+container2.insertBefore(style2, container2.firstChild);
+console.log('✅ 场景 2: 已在容器开头添加 style');
+
+// 场景 3: 完全模拟插件的实现方式
+const container3 = document.getElementById('test3');
+// empty()
+container3.innerHTML = '';
+// createEl('style')
+const style3 = document.createElement('style');
+style3.textContent = scopedCSS;
+container3.appendChild(style3);
+// createDiv('mdskill-preview')
+const contentDiv = document.createElement('div');
+contentDiv.className = 'mdskill-preview';
+contentDiv.innerHTML = '<h2>这是标题</h2><p>这是段落文本</p>';
+container3.appendChild(contentDiv);
+console.log('✅ 场景 3: 完全模拟插件实现');
+
+// 检查实际应用的样式
+setTimeout(() => {
+  console.log('\n=== 检查实际样式 ===');
+  ['test1', 'test2', 'test3'].forEach(id => {
+    const h2 = document.querySelector(`#${id} h2`);
+    if (h2) {
+      const computed = window.getComputedStyle(h2);
+      console.log(`${id} h2:`, {
+        color: computed.color,
+        fontSize: computed.fontSize,
+        borderBottom: computed.borderBottom
+      });
+    }
+  });
+}, 100);
+</script>
+
+</body>
+</html>

@@ -1,0 +1,53 @@
+--- a/main.ts
++++ b/main.ts
+@@ -311,23 +311,30 @@
+ 
+ 		// 动态创建 style 元素（而不是通过 innerHTML）
+ 		const styleEl = this.previewEl.createEl('style');
+-		const scopedCSS = style.css
+-			.replace(/body\s*\{/g, '.mdskill-preview {')
+-			.replace(/\bh1\s*\{/g, '.mdskill-preview h1 {')
+-			.replace(/\bh2\s*\{/g, '.mdskill-preview h2 {')
+-			.replace(/\bh3\s*\{/g, '.mdskill-preview h3 {')
+-			.replace(/\bh4\s*\{/g, '.mdskill-preview h4 {')
+-			.replace(/\bh5\s*\{/g, '.mdskill-preview h5 {')
+-			.replace(/\bh6\s*\{/g, '.mdskill-preview h6 {')
+-			.replace(/\bp\s*\{/g, '.mdskill-preview p {')
+-			.replace(/\bblockquote\s*\{/g, '.mdskill-preview blockquote {')
+-			.replace(/\bcode\s*\{/g, '.mdskill-preview code {')
+-			.replace(/\bpre\s*\{/g, '.mdskill-preview pre {')
+-			.replace(/\bul\s*\{/g, '.mdskill-preview ul {')
+-			.replace(/\bol\s*\{/g, '.mdskill-preview ol {')
+-			.replace(/\bli\s*\{/g, '.mdskill-preview li {')
+-			.replace(/\ba\s*\{/g, '.mdskill-preview a {')
+-			.replace(/\bimg\s*\{/g, '.mdskill-preview img {')
+-			.replace(/\bhr\s*\{/g, '.mdskill-preview hr {')
+-			.replace(/\bstrong\s*\{/g, '.mdskill-preview strong {')
+-			.replace(/\bem\s*\{/g, '.mdskill-preview em {');
++		
++		// 作用域化 + 添加 !important 强制覆盖 Obsidian 全局样式
++		let scopedCSS = style.css
++			.replace(/body\s*\{/g, '.mdskill-preview {')
++			.replace(/([^}])\}h1\s*\{/g, '$1}.mdskill-preview h1 {')
++			.replace(/([^}])\}h2\s*\{/g, '$1}.mdskill-preview h2 {')
++			.replace(/([^}])\}h3\s*\{/g, '$1}.mdskill-preview h3 {')
++			.replace(/([^}])\}h4\s*\{/g, '$1}.mdskill-preview h4 {')
++			.replace(/([^}])\}h5\s*\{/g, '$1}.mdskill-preview h5 {')
++			.replace(/([^}])\}h6\s*\{/g, '$1}.mdskill-preview h6 {')
++			.replace(/([^}])\}p\s*\{/g, '$1}.mdskill-preview p {')
++			.replace(/([^}])\}blockquote\s*\{/g, '$1}.mdskill-preview blockquote {')
++			.replace(/([^}])\}code\s*\{/g, '$1}.mdskill-preview code {')
++			.replace(/([^}])\}pre\s*\{/g, '$1}.mdskill-preview pre {')
++			.replace(/([^}])\}ul\s*\{/g, '$1}.mdskill-preview ul {')
++			.replace(/([^}])\}ol\s*\{/g, '$1}.mdskill-preview ol {')
++			.replace(/([^}])\}li\s*\{/g, '$1}.mdskill-preview li {')
++			.replace(/([^}])\}a\s*\{/g, '$1}.mdskill-preview a {')
++			.replace(/([^}])\}img\s*\{/g, '$1}.mdskill-preview img {')
++			.replace(/([^}])\}hr\s*\{/g, '$1}.mdskill-preview hr {')
++			.replace(/([^}])\}strong\s*\{/g, '$1}.mdskill-preview strong {')
++			.replace(/([^}])\}em\s*\{/g, '$1}.mdskill-preview em {');
++		
++		// 添加 !important 到关键样式属性
++		scopedCSS = scopedCSS.replace(/(color|font-size|font-family|line-height|border-bottom|background|padding|margin):\s*([^;]+);/g, '$1:$2 !important;');
+ 
+ 		styleEl.textContent = scopedCSS;

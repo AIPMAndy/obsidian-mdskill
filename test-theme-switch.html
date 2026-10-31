@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>主题切换测试</title>
+<style>
+body { font-family: sans-serif; padding: 20px; }
+.controls { margin-bottom: 20px; }
+select { padding: 8px; font-size: 14px; }
+</style>
+</head>
+<body>
+
+<div class="controls">
+  <label>选择主题: </label>
+  <select id="themeSelect">
+    <option value="playful">多彩活力</option>
+    <option value="minimal">极简现代</option>
+    <option value="nytimes">纽约时报</option>
+    <option value="cyberpunk">赛博朋克</option>
+    <option value="zen">禅意留白</option>
+  </select>
+</div>
+
+<div id="preview"></div>
+
+<script>
+const STYLES = {
+  playful: {
+    css: 'body{font-family:-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;font-size:17px;line-height:1.9;color:#2c2c2c;max-width:700px;margin:0 auto;padding:56px 48px;background:#fefdfb;}h1{font-family:"Georgia", "Noto Serif SC", serif;font-size:36px;font-weight:700;color:#1a1a1a;margin:0 0 32px;}h2{font-family:-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;font-size:26px;font-weight:700;color:#0066cc;margin:48px 0 20px;border-bottom:2px solid #0066cc;padding-bottom:8px;}'
+  },
+  minimal: {
+    css: 'body{font-family:"Noto Sans SC", -apple-system, sans-serif;font-size:16px;line-height:1.9;color:#374151;max-width:680px;margin:0 auto;padding:48px 32px;background:#fafafa;}h1{font-family:"Noto Sans SC", -apple-system, sans-serif;font-size:36px;font-weight:800;color:#111827;margin:0 0 24px;}h2{font-family:"Noto Sans SC", -apple-system, sans-serif;font-size:22px;font-weight:600;color:#111827;margin:36px 0 16px;border-bottom:none;padding-bottom:8px;}'
+  },
+  nytimes: {
+    css: 'body{font-family:Georgia, "Times New Roman", serif;font-size:18px;line-height:1.95;color:#222222;max-width:680px;margin:0 auto;padding:56px 48px;background:#ffffff;}h1{font-family:Georgia, "Noto Serif SC", serif;font-size:38px;font-weight:700;color:#000000;margin:0 0 32px;}h2{font-family:Georgia, serif;font-size:24px;font-weight:700;color:#000000;margin:44px 0 18px;border-bottom:2px solid #cccccc;padding-bottom:8px;}'
+  },
+  cyberpunk: {
+    css: 'body{font-family:"Rajdhani", sans-serif;font-size:16px;line-height:1.75;color:#e0e0e0;max-width:720px;margin:0 auto;padding:44px 40px;background:#0a0e27;}h1{font-family:"Orbitron", sans-serif;font-size:32px;font-weight:900;color:#ff00ff;margin:0 0 24px;}h2{font-family:"Orbitron", sans-serif;font-size:24px;font-weight:700;color:#00ffff;margin:40px 0 16px;border-bottom:2px solid #ff00ff;padding-bottom:8px;}'
+  },
+  zen: {
+    css: 'body{font-family:"Noto Serif SC", serif;font-size:16px;line-height:2.2;color:#4a4a4a;max-width:600px;margin:0 auto;padding:64px 48px;background:#ffffff;}h1{font-family:"Noto Serif SC", serif;font-size:28px;font-weight:400;color:#2c2c2c;margin:0 0 40px;}h2{font-family:"Noto Serif SC", serif;font-size:22px;font-weight:400;color:#3a3a3a;margin:56px 0 24px;border-bottom:none;padding-bottom:8px;}'
+  }
+};
+
+const markdown = `# 这是标题一
+
+## 这是标题二
+
+这是一段普通文本，用来测试段落样式。
+
+> 这是一个引用块，测试引用样式。
+
+- 列表项一
+- 列表项二
+- 列表项三`;
+
+function applyTheme(themeId) {
+  const style = STYLES[themeId];
+  if (!style) return;
+  
+  const scopedCSS = style.css
+    .replace(/body\s*\{/g, '.mdskill-preview {')
+    .replace(/\bh1\s*\{/g, '.mdskill-preview h1 {')
+    .replace(/\bh2\s*\{/g, '.mdskill-preview h2 {');
+  
+  const html = `<style>${scopedCSS}</style><div class="mdskill-preview"><h1>这是标题一</h1><h2>这是标题二</h2><p>这是一段普通文本，用来测试段落样式。</p><blockquote>这是一个引用块，测试引用样式。</blockquote><ul><li>列表项一</li><li>列表项二</li><li>列表项三</li></ul></div>`;
+  
+  document.getElementById('preview').innerHTML = html;
+}
+
+document.getElementById('themeSelect').addEventListener('change', (e) => {
+  applyTheme(e.target.value);
+});
+
+applyTheme('playful');
+</script>
+
+</body>
+</html>
